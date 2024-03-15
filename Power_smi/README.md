@@ -29,7 +29,7 @@ kill -9 `pgrep -f xpu-smi`
 
 ```
 
-### AMD ROCM-SMI
+### AMD ROCM-SMI (WIP)
 
 ```
 export timetag=$(date | awk '{print $4 "-" $3 "-" $2 "-" $5 "-" $6}' | awk -F: '{print $1 "-" $2 "-" $3}')

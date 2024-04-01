@@ -10,6 +10,7 @@
 from __future__ import division
 import os, sys, getopt
 import csv
+import matplotlib.pyplot as plt
 from datetime import datetime
 
 
@@ -99,6 +100,7 @@ if __name__ == "__main__":
         print("        - Power range     = {0:.1f} - {1:.1f} W".format(min(P),max(P)))
         print("        - Frequency range = {0:.1f} - {1:.1f} MHz".format(min(Freq),max(Freq)))
 
+
         # Write the time series without units in a csv file
         csvout = 'CSV_OUT_'+csvfilename
         fcsvout = open(csvout,"w")
@@ -106,7 +108,22 @@ if __name__ == "__main__":
         for i, t in enumerate(T):
             fcsvout.write("{0:f}, {1:f}, {2:f}, {3:f}\n".format(t,Util[i],P[i],Freq[i]))
         fcsvout.close()
-        
+
+
+        # Draw plots for Util, Power, and Frequency
+        fig, ax = plt.subplots(layout='constrained',figsize=(10,3))
+        ax2 = ax.twinx()
+        ax.plot(Util,color='darkorange')
+        ax.plot(P,color='royalblue')
+        ax2.plot(Freq,color='dimgrey')
+        ax.set_xlabel('T(sec)')
+        ax.set_ylim(0,max(max(P),max(Util))*1.1)
+        ax.set_ylabel('Power(W) / Utilization(%)')
+        ax2.set_ylabel('Frequency(MHz)')
+        ax2.set_ylim(0,max(Freq)*1.1)
+        plt.savefig(csvfilename+'.png',dpi=300); 
+
+
     if isverbose:
         print(T)
         print(Freq)

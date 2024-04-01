@@ -46,7 +46,7 @@ kill -9 `pgrep -f watch`
 ## Intruction to post-process the collected power data
 
 ```
-./Read_smi -i PUT_nvidia-smi.csv           # for NVIDIA GPUs
-./Read_smi -i PUT_xpu-smi.csv              # for Intel GPUs
-./Read_smi -i PUT_rocm-smi.csv             # for AMD GPUs
+python3 Read_smi -i PUT_nvidia-smi.csv           # for NVIDIA GPUs
+python3 Read_smi -i PUT_xpu-smi.csv              # for Intel GPUs
+python3 Read_smi -i PUT_rocm-smi.csv             # for AMD GPUs (WIP)
 ```

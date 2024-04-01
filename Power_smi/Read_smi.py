@@ -104,7 +104,7 @@ if __name__ == "__main__":
         # Write the time series without units in a csv file
         csvout = 'CSV_OUT_'+csvfilename
         fcsvout = open(csvout,"w")
-        fcsvout.write("T(sec), Util(%), Power(Wh), Freq(MHz)\n")
+        fcsvout.write("T(sec), Util(%), Power(W), Freq(MHz)\n")
         for i, t in enumerate(T):
             fcsvout.write("{0:f}, {1:f}, {2:f}, {3:f}\n".format(t,Util[i],P[i],Freq[i]))
         fcsvout.close()
@@ -113,14 +113,18 @@ if __name__ == "__main__":
         # Draw plots for Util, Power, and Frequency
         fig, ax = plt.subplots(layout='constrained',figsize=(10,3))
         ax2 = ax.twinx()
-        ax.plot(Util,color='darkorange')
-        ax.plot(P,color='royalblue')
-        ax2.plot(Freq,color='dimgrey')
+        lns1=ax.plot(Util,color='darkorange',label='Utilization')
+        lns2=ax.plot(P,color='royalblue',label='Power')
+        lns3=ax2.plot(Freq,color='dimgrey',label='Frequency')
         ax.set_xlabel('T(sec)')
         ax.set_ylim(0,max(max(P),max(Util))*1.1)
         ax.set_ylabel('Power(W) / Utilization(%)')
         ax2.set_ylabel('Frequency(MHz)')
         ax2.set_ylim(0,max(Freq)*1.1)
+        # ax.grid()
+        lns=lns1+lns2+lns3
+        labs = [l.get_label() for l in lns]
+        ax.legend(lns, labs, loc=3)
         plt.savefig(csvfilename+'.png',dpi=300); 
 
 

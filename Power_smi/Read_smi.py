@@ -87,9 +87,10 @@ if __name__ == "__main__":
             print(reader.fieldnames)
 
         # Adjust the reference time
-        minT = min(T)
+        minT = T[0]
         T = [t - minT for t in T]
         dT = max(T)
+        # dT = len(T)-1
 
         # Computing energy (J) using power (W)
         Energy = (sum(P[:-1]) + sum(P[1:]) ) / 2 / (len(P)-1) * dT
@@ -98,6 +99,13 @@ if __name__ == "__main__":
         print("        - Power range     = {0:.1f} - {1:.1f} W".format(min(P),max(P)))
         print("        - Frequency range = {0:.1f} - {1:.1f} MHz".format(min(Freq),max(Freq)))
 
+        # Write the time series without units in a csv file
+        csvout = 'CSV_OUT_'+csvfilename
+        fcsvout = open(csvout,"w")
+        fcsvout.write("T(sec), Util(%), Power(kJ), Freq(MHz)\n")
+        for i, t in enumerate(T):
+            fcsvout.write("{0:f}, {1:f}, {2:f}, {3:f}\n".format(t,Util[i],P[i],Freq[i]))
+        fcsvout.close()
         
     if isverbose:
         print(T)

@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
         # Computing energy (J) using power (W)
         Energy = (sum(P[:-1]) + sum(P[1:]) ) / 2 / (len(P)-1) * dT
-        print("        - Energy used     = {0:.3f} kJ".format(Energy/1000))
+        print("        - Energy used     = {0:.3f} Wh".format(Energy/3600))
         print("        - Time Duration   = {0:.1f} sec".format(dT))
         print("        - Power range     = {0:.1f} - {1:.1f} W".format(min(P),max(P)))
         print("        - Frequency range = {0:.1f} - {1:.1f} MHz".format(min(Freq),max(Freq)))
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         # Write the time series without units in a csv file
         csvout = 'CSV_OUT_'+csvfilename
         fcsvout = open(csvout,"w")
-        fcsvout.write("T(sec), Util(%), Power(kJ), Freq(MHz)\n")
+        fcsvout.write("T(sec), Util(%), Power(Wh), Freq(MHz)\n")
         for i, t in enumerate(T):
             fcsvout.write("{0:f}, {1:f}, {2:f}, {3:f}\n".format(t,Util[i],P[i],Freq[i]))
         fcsvout.close()

@@ -124,11 +124,15 @@ if __name__ == "__main__":
 
 
         # Draw plots for Util, Power, and Frequency
+        if len(T) > 1000:
+            LW = 0.5
+        else:
+            LW = 1.0
         fig, ax = plt.subplots(layout='constrained',figsize=(10,3))
         ax2 = ax.twinx()
-        lns1=ax.plot(Util,color='darkorange',label='Utilization')
-        lns2=ax.plot(P,color='royalblue',label='Power')
-        lns3=ax2.plot(Freq,color='dimgrey',label='Frequency')
+        lns1=ax.plot(Util,color='darkorange',label='Utilization', linewidth=LW)
+        lns2=ax.plot(P,color='royalblue',label='Power', linewidth=LW)
+        lns3=ax2.plot(Freq,color='dimgrey',label='Frequency', linewidth=LW)
         ax.set_xlabel('T(sec)')
         ax.set_ylim(0,max(max(P),max(Util))*1.1)
         ax.set_ylabel('Power(W) / Utilization(%)')

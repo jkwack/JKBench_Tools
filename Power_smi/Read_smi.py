@@ -87,11 +87,24 @@ if __name__ == "__main__":
         if isverbose:
             print(reader.fieldnames)
 
-        # Adjust the reference time
-        # minT = T[0]
-        # T = [t - minT for t in T]
-        # dT = max(T)
-        dT = len(T)-1
+        # Adjust time to start from 0
+        T = [ t - T[0] for t in T]
+
+        # Check variable overflow
+        if (min(T) != 0.0):
+            # print("T is overflown")
+            for i in range(len(T)-1):
+                if T[i] > T[i+1]:
+                    if i == 0:
+                        delta = T[i+2] - T[i+1]
+                    else:
+                        delta = T[i] - T[i-1]
+                    deltaT = T[i] - T[i+1] + delta
+                    for j in range(len(T[i+1:])):
+                        T[i+1+j] = T[i+1+j] + deltaT
+        dT = max(T)
+        if (dT is not T[-1]):
+            print("Warning: check if T is overflown or not")
 
         # Computing energy (J) using power (W)
         Energy = (sum(P[:-1]) + sum(P[1:]) ) / 2 / (len(P)-1) * dT

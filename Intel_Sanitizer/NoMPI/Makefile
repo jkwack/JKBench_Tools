@@ -34,8 +34,8 @@ $(EXE_D02): $(SRC_D02)
 	rm -rf *.o *.mod *.dSYM
 
 $(EXE_D03): $(SRC_D03)
-	$(cc) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-	$(cc) $(CFLAGS) $(ASAN_FLAGS) -g $^ -o $@_ASAN $(LDFLAGS)
+	$(cc) $(CFLAGS) -DTRY_OMP_ASAN $^ -o $@ $(LDFLAGS)
+	$(cc) $(CFLAGS) $(ASAN_FLAGS) -DTRY_OMP_ASAN -g $^ -o $@_ASAN $(LDFLAGS)
 	rm -rf *.o *.mod *.dSYM
 
 

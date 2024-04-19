@@ -16,7 +16,7 @@ CPPFLAGS=-fsycl -O2 -g
 CFLAGS=-fiopenmp -fopenmp-targets=spir64 -O2 -g
 FFLAGS=-O2 -g
 
-ASAN_FLAGS=-fsanitize=address -Xarch_device
+ASAN_FLAGS=-Xarch_device -fsanitize=address
 LDFLAGS=
 
 

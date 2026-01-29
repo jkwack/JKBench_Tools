@@ -45,7 +45,7 @@ void Hang_L1(void){
 
 
 
-void Comp_Geo(REAL *GeoR, REAL *GeoResult, int n, int nGeo){
+void Comp_Geo(REAL *GeoR, REAL *GeoResult, int n, int nGeo, int hang){
    int iGeo, i, j, id;
    REAL tmpR, tmpResult;
 
@@ -61,6 +61,14 @@ void Comp_Geo(REAL *GeoR, REAL *GeoResult, int n, int nGeo){
          GeoResult[id] = tmpResult;
       }
    }
+
+   if (hang)
+   {
+      #pragma omp target
+      Hang_L1();
+   }
+
+
 
 }
 
@@ -140,7 +148,7 @@ int main(int argc, char *argv[]){
    // Warming up
    //
    if (myid == 0) printf("\t\tWarming up .....\n");
-   Comp_Geo(GeoR, GeoResult, n, nGeo);
+   Comp_Geo(GeoR, GeoResult, n, nGeo, hang_id == myid);
 
    //
    // Starting the main computation
@@ -153,7 +161,7 @@ int main(int argc, char *argv[]){
    // A loop for iterations
    for(iiter=1;iiter<=niter;iiter++){
       if(myid==0) printf("|||||");
-      Comp_Geo(GeoR, GeoResult, n, nGeo);
+      Comp_Geo(GeoR, GeoResult, n, nGeo, hang_id == myid);
       if(myid==0) printf("|||||");
    }
    if(myid==0) printf("\n");
@@ -216,12 +224,6 @@ int main(int argc, char *argv[]){
       printf("\t\t%45s%12.6f  %12.6f  %12.6f\n","GFLOP-rate_{Min,Mean,Max}/MPI = ",FR_MPI_Min,FR_MPI_Mean,FR_MPI_Max);
       printf("\t\t%45s%12.6f%s\n","Wall Time = ",WT_MPI," sec");
       printf("\t\t%45s%12.6f%s\n","FLOP-rate = ",FR_MPI," GFLOP/sec");
-   }
-
-   // Hang
-   if (hang_id == myid) {
-      printf("%s%i\n","************Hanging at MPI rank ",myid);
-      Hang_L1();
    }
 
 

@@ -1,0 +1,9 @@
+module use /home/adangelo/local/lmod/modulefiles/core/
+module use /opt/cray/pe/lmod/modulefiles/core
+module load cray-dyninst cray-cti/2.21.1 cray-stat/4.12.9
+
+export STAT_GDB=gdb-oneapi
+export ZET_ENABLE_PROGRAM_DEBUGGING=1
+export IGC_VISAOptions="-enableBarrierWA"
+
+

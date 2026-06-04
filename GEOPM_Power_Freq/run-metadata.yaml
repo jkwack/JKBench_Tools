@@ -20,4 +20,3 @@ workload:
   ranks:           # MPI ranks
   threads_per_rank:
   gpus_per_rank:
-  duration_s:      # wall-clock seconds of the measured region

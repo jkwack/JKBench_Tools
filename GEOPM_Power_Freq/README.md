@@ -17,6 +17,7 @@ into the harness.
 | `Run_my_app.sh`      | Launches **your** application — this is the timed/measured region | **Yes** — replace the body with your own `mpiexec`/`mpirun` line |
 | `freq_set.sh`        | Pins the GPU min/max/boost frequency via sysfs (`/sys/class/drm/cardN/...`) | Usually no; edit only if your system uses different sysfs paths |
 | `parse_power.py`     | Reads `output_power.*.txt` and prints an aligned per-frequency summary | Usually no |
+| `run-metadata.yaml`  | Template for per-run metadata (system, workload, problem size, etc.). The job script copies it into `output.${jobid}/metadata.${jobid}.yaml` and pre-fills `run_id` and `date`. | Edit the per-run copy (not this template) after the job finishes |
 
 ---
 
@@ -89,6 +90,7 @@ Everything for a single job lands in `output.${jobid}/`:
 | `output_power.${jobid}.txt`           | Raw per-frequency blocks (input to the parser) |
 | `output_app.FREQ${F}.${jobid}.txt`    | Combined stdout/stderr of `Run_my_app.sh` at frequency F |
 | `summary.${jobid}.txt`                | Human-readable per-frequency table (parser output) |
+| `metadata.${jobid}.yaml`              | Per-run metadata. `run_id` and `date` are pre-filled by the job script; **you should fill in the remaining fields** (collector, system, workload, problem_size, …) before sharing or archiving the run |
 | `Power_Measurement.o${jobid}`         | PBS stdout (moved here at the end of the job, if possible) |
 
 ### Reading the summary

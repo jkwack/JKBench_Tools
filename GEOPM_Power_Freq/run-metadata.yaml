@@ -1,0 +1,23 @@
+# Metadata for a single power measurement run.
+# Copy this file into data/raw/<run-id>/metadata.yaml and fill in every field.
+# If a value is genuinely unknown, write the literal string "unknown" rather
+# than deleting the key.
+
+run_id:            # e.g. 2026-06-04_kynema-sgf_1node
+date:              # ISO 8601, e.g. 2026-06-04
+collector:         # name and email of who ran the measurement
+contact:           # who to ask about this run
+
+system:
+  name:            # e.g. aurora
+  num_nodes:       # e.g. 1
+
+workload:
+  app:             # e.g. kynema-sgf
+  version:         # commit SHA, release tag, or version string
+  problem_size:    # short description of input / problem size
+                   # e.g. blade-count=42, dt=1e-4, n_steps=10000
+  ranks:           # MPI ranks
+  threads_per_rank:
+  gpus_per_rank:
+  duration_s:      # wall-clock seconds of the measured region

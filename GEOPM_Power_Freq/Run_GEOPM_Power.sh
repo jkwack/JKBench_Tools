@@ -18,6 +18,19 @@ OUTDIR=output.${jobid}
 mkdir -p ${OUTDIR}
 OUT_POWER=${OUTDIR}/output_power.${jobid}.txt
 
+# Seed per-run metadata: copy template, fill in run_id and date.
+# Colleagues should open ${METADATA} after the run and fill the rest.
+METADATA=${OUTDIR}/metadata.${jobid}.yaml
+if [ -f run-metadata.yaml ]; then
+	cp run-metadata.yaml ${METADATA}
+	sed -i \
+		-e "s|^run_id:.*|run_id: ${jobid}|" \
+		-e "s|^date:.*|date: $(date -Idate)|" \
+		${METADATA}
+else
+	echo "WARNING: run-metadata.yaml template not found; skipping ${METADATA}" >&2
+fi
+
 declare -a GPU_FREQ
 declare -a GPU_EnergyStart
 declare -a GPU_EnergyEnd

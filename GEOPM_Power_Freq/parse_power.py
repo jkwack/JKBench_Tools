@@ -93,7 +93,7 @@ def main():
         header = (
             f"{'Freq (MHz)':>10} {'Runtime (s)':>12} {'GPU Pow (W)':>14}"
             f" {'Board Pow (W)':>14} {'GPU Energy':>14} {'Board Energy':>14}"
-            f" {'App exit':>9}  Frequency control"
+            f" {'App exit':>9}  {'Frequency control':<35} {'FOM':>12}"
         )
         print(header)
         for freq, runtime, app_rc, board, gpu, reported in sorted(parse_file(path)):
@@ -105,18 +105,19 @@ def main():
             bp_s = f"{board_pow:.1f}" if board_pow is not None else "N/A"
             gp_s = f"{gpu_pow:.1f}" if gpu_pow is not None else "N/A"
             rc_s = str(app_rc) if app_rc is not None else "N/A"
+            fom_s = ""
             freq_ctrl = freq_control_status(freq, reported)
             app_bad = app_rc is not None and app_rc != 0
             ok = (freq_ctrl == "success") and not app_bad
             total_blocks += 1
             if not ok:
                 total_failed += 1
-            suffix = freq_ctrl
+            ctrl = freq_ctrl
             if app_bad:
-                suffix = f"{freq_ctrl} | app FAILED (rc={app_rc})"
+                ctrl = f"{freq_ctrl} | app FAILED (rc={app_rc})"
             print(
                 f"{freq:>10d} {rt_s:>12} {gp_s:>14} {bp_s:>14}"
-                f" {gpu_s:>14} {board_s:>14} {rc_s:>9}  {suffix}"
+                f" {gpu_s:>14} {board_s:>14} {rc_s:>9}  {ctrl:<35} {fom_s:>12}"
             )
 
     if total_blocks:

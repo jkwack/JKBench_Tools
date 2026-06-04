@@ -94,7 +94,7 @@ Everything for a single job lands in `output.${jobid}/`:
 ### Reading the summary
 
 ```
-Freq (MHz)  Runtime (s)    GPU Pow (W)  Board Pow (W)     GPU Energy   Board Energy  App exit  Frequency control
+Freq (MHz)  Runtime (s)    GPU Pow (W)  Board Pow (W)     GPU Energy   Board Energy  App exit  Frequency control                            FOM
        800       59.596          720.2         2068.7          42921         123285         0  success
        900       56.634          788.0         2137.9          44625         121075         0  success
       ...
@@ -110,6 +110,7 @@ Freq (MHz)  Runtime (s)    GPU Pow (W)  Board Pow (W)     GPU Energy   Board Ene
 | **Board Energy**      | `MSR::BOARD_ENERGY` delta (J) |
 | **App exit**          | Exit code of `Run_my_app.sh` (0 = OK) |
 | **Frequency control** | `success` if every GPU chip reported the requested frequency in `GPU_CORE_FREQUENCY_STATUS`; otherwise `failed [failed GPUs: [ids]]` |
+| **FOM**               | Empty by design. Fill in your application's Figure of Merit (e.g. throughput, GFLOP/s, steps/s) after the run, by reading it from the matching `output_app.FREQ${F}.${jobid}.txt` and editing `summary.${jobid}.txt`. |
 
 The trailing **`Summary: N/N blocks OK`** line counts blocks where BOTH the
 app exited cleanly AND the frequency was correctly applied to all GPUs.
